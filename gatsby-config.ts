@@ -12,10 +12,9 @@ const config: GatsbyConfig = {
   plugins: ["gatsby-plugin-mdx", {
     resolve: 'gatsby-source-filesystem',
     options: {
-      "name": "pages",
-      "path": "./src/pages/"
+      "name": "blog",
+      "path": `${__dirname}/blog`
     },
-    __key: "pages"
   }]
 };
 
