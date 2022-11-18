@@ -1,27 +1,43 @@
-import * as React from "react"
-import { Link, graphql } from "gatsby"
-import type { HeadFC, PageProps } from "gatsby"
+import * as React from "react";
+import { Link, graphql } from "gatsby";
+import type { HeadFC, PageProps } from "gatsby";
 
-const IndexPage: React.FC<PageProps> = ({ data }) => {
-  return (<main>
-    {
-        data.allMdx.nodes.map(node => (
-          <article key={node.id}>
-            <h2>
-              <Link to={`/blog/${node.frontmatter.slug}`}>
-                {node.frontmatter.title}
-              </Link>
-            </h2>
-            <p>Posted: {node.frontmatter.date}</p>
-          </article>
-        ))
-      }
-  </main>)
+type Node = {
+  id: number,
+  frontmatter: {
+    slug: string,
+    date: string,
+    title: string,
+  }
 }
+
+type Data = {
+  allMdx: {
+    nodes: Node[]
+  }
+};
+
+
+const IndexPage = ({ data }: PageProps<Data>) => {
+  return (
+    <main>
+      {data.allMdx.nodes.map((node) => (
+        <article key={node.id}>
+          <h2>
+            <Link to={`/blog/${node.frontmatter.slug}`}>
+              {node.frontmatter.title}
+            </Link>
+          </h2>
+          <p>Posted: {node.frontmatter.date}</p>
+        </article>
+      ))}
+    </main>
+  );
+};
 
 export const query = graphql`
   query {
-    allMdx(sort: { frontmatter: { date: DESC }}) {
+    allMdx(sort: { frontmatter: { date: DESC } }) {
       nodes {
         frontmatter {
           date(formatString: "MMMM D, YYYY")
@@ -32,8 +48,8 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 
-export default IndexPage
+export default IndexPage;
 
-export const Head: HeadFC = () => <title>Home Page</title>
+export const Head: HeadFC = () => <title>Home Page</title>;
