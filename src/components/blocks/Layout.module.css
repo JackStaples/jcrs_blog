@@ -1,0 +1,14 @@
+:root {
+    --background: #ffffff;
+    --text: #000000;
+    --highlight: #D81B3F;
+}
+
+body {
+    background-color: var(--background);
+}
+
+.container {
+    margin: auto;
+    max-width: 500px;
+}

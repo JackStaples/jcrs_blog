@@ -1,19 +1,13 @@
 import * as React from "react";
 import { Link, graphql } from "gatsby";
-import Layout from '../components/Layout'
+import Layout from '../components/blocks/Layout'
+import BlogContent from '../components/blocks/BlogContent'
 import type { HeadFC, PageProps } from "gatsby";
+import type { BlogInformation } from '../types/BlogInformation'
 
-type Node = {
-  id: number,
-  frontmatter: {
-    slug: string,
-    date: string,
-    title: string,
-  }
-}
 type Data = {
   allMdx: {
-    nodes: Node[]
+    nodes: BlogInformation[]
   }
 };
 
@@ -22,14 +16,7 @@ const IndexPage: React.FC<PageProps<Data>> = ({ data }) => {
   return (
     <Layout>
       {data.allMdx.nodes.map((node) => (
-        <article key={node.id}>
-          <h2>
-            <Link to={`/blog/${node.frontmatter.slug}`}>
-              {node.frontmatter.title}
-            </Link>
-          </h2>
-          <p>Posted: {node.frontmatter.date}</p>
-        </article>
+        <BlogContent id={node.id} frontmatter={node.frontmatter} />
       ))}
     </Layout>
   );
