@@ -4,7 +4,8 @@ import { header } from './BlogContent.module.css'
 import type { BlogInformation } from '../../types/BlogInformation'
 
 
-const BlogContent = ({ id, frontmatter }: BlogInformation) => {
+const BlogContent = ({ id, frontmatter, body }: BlogInformation) => {
+    const words = body.split(' ');
     return (
         <article key={id}>
             <h2 className={header}>
@@ -12,7 +13,7 @@ const BlogContent = ({ id, frontmatter }: BlogInformation) => {
                     {frontmatter.title}
                 </Link>
             </h2>
-            <p>{frontmatter.date}</p>
+            <p>{frontmatter.date} • {words.length} words</p>
         </article>)
 }
 

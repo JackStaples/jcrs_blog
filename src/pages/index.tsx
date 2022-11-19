@@ -16,7 +16,7 @@ const IndexPage: React.FC<PageProps<Data>> = ({ data }) => {
   return (
     <Layout>
       {data.allMdx.nodes.map((node) => (
-        <BlogContent id={node.id} frontmatter={node.frontmatter} />
+        <BlogContent id={node.id} frontmatter={node.frontmatter} body={node.body} />
       ))}
     </Layout>
   );
@@ -31,6 +31,7 @@ export const query = graphql`
           title
           slug
         }
+        body
         id
       }
     }

@@ -5,4 +5,5 @@ export interface BlogInformation {
       date: string,
       title: string,
     }
+    body: string,
   }
