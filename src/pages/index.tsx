@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link, graphql } from "gatsby";
+import Layout from '../components/Layout'
 import type { HeadFC, PageProps } from "gatsby";
 
 type Node = {
@@ -10,7 +11,6 @@ type Node = {
     title: string,
   }
 }
-
 type Data = {
   allMdx: {
     nodes: Node[]
@@ -18,9 +18,9 @@ type Data = {
 };
 
 
-const IndexPage = ({ data }: PageProps<Data>) => {
+const IndexPage: React.FC<PageProps<Data>> = ({ data }) => {
   return (
-    <main>
+    <Layout>
       {data.allMdx.nodes.map((node) => (
         <article key={node.id}>
           <h2>
@@ -31,7 +31,7 @@ const IndexPage = ({ data }: PageProps<Data>) => {
           <p>Posted: {node.frontmatter.date}</p>
         </article>
       ))}
-    </main>
+    </Layout>
   );
 };
 
