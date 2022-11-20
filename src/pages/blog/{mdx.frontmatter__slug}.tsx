@@ -1,12 +1,15 @@
 import * as React from 'react'
-import { graphql, PageProps } from 'gatsby'
+import { graphql } from 'gatsby'
+import { ReactNode } from "react";
+import Layout from '../../components/blocks/Layout'
 
-const BlogPost: React.FC<PageProps> = ({ data, children }) => {
-  
+const BlogPost: React.FC<{ children: ReactNode[] }> = ({ children }) => {
+
   return (
     <>
-      <p>{data.mdx.frontmatter.date}</p>
-      {children}
+      <Layout>
+        {children}
+      </Layout>
     </>
   )
 }

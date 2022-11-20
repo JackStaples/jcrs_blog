@@ -4,6 +4,7 @@ export interface BlogInformation {
       slug: string,
       date: string,
       title: string,
+      tag: string,
     }
     body: string,
   }

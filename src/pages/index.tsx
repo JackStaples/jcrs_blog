@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, graphql } from "gatsby";
+import { graphql } from "gatsby";
 import Layout from '../components/blocks/Layout'
 import BlogContent from '../components/blocks/BlogContent'
 import type { HeadFC, PageProps } from "gatsby";
@@ -30,6 +30,7 @@ export const query = graphql`
           date(formatString: "MMMM D, YYYY")
           title
           slug
+          tag
         }
         body
         id
