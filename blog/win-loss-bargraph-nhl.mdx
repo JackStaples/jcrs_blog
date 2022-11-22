@@ -10,14 +10,19 @@ citation: ""
 
 import { WinLossBarchart } from "../src/components/viz/WinLossBargraph";
 
-<main style={{'textAlign': 'center'}}>
-# Wins and Loss in the NHL
-<WinLossBarchart 
-    data={[{wins: 12, losses: 5},{wins: 14, losses: 1},{wins: 6, losses: 14},{wins: 9, losses: 10},{wins: 10, losses: 10}]}
+<main style={{ textAlign: "center" }}>
+  # Wins and Loss in the NHL
+  <WinLossBarchart
+    data={[
+      { wins: 12, losses: 5 },
+      { wins: 14, losses: 1 },
+      { wins: 6, losses: 14 },
+      { wins: 9, losses: 10 },
+      { wins: 10, losses: 10 },
+    ]}
     winColour="#005AB5"
     lossColour="#DC3220"
     barHeight={3}
-    spacing={1}
-    axisLines={2}
-/>
+    axisLinesInterval={2}
+  />
 </main>
