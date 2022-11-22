@@ -26,7 +26,6 @@ function generateWinLossAxisLabels(maximum: number, increment: number): string[]
     for (let i = maximum; i >= 0; i -= increment) {
         retVal.push(String(i));
     }
-    console.log(retVal)
     return retVal;
 }
 
