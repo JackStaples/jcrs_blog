@@ -1,8 +1,18 @@
 import * as React from "react";
-export const WinLossBarchart = ({ data }: { data: { wins: number, losses: number }[] }) => {
-    const width = 450;
+import type { Colour } from '../../types/Colour'
+
+interface Props {
+    data: { wins: number, losses: number }[],
+    winColour: Colour,
+    lossColour: Colour,
+    barHeight: number,
+    width: number,
+    spacing: number,
+}
+
+export const WinLossBarchart = ({ data, winColour, lossColour, barHeight, width, spacing }: Props) => {
     let curY = 0;
-    const barHeight = 20;
+
     const mostWinsOrLosses = data.reduce<number>((result, item) => {
         const sum = item.wins > item.losses ? item.wins : item.losses;
         return sum > result ? sum : result;
@@ -12,22 +22,19 @@ export const WinLossBarchart = ({ data }: { data: { wins: number, losses: number
             {data.map((el) => {
                 const winBarWidth = (el.wins / mostWinsOrLosses) * (width / 2)
                 const lossBarWidth = (el.losses / mostWinsOrLosses) * (width / 2)
-                const y = curY; curY += barHeight;
+                const y = curY;
+                curY += barHeight + spacing;
                 return (
-                    <g strokeWidth={5}>
-                        <g>
-                            <rect fill='green' y={y} x={width / 2} width={winBarWidth} height={20}></rect>
-                            <foreignObject x={width / 2} y={y} width={winBarWidth} height={20}>
-                                <p>{el.wins}</p>
-                            </foreignObject>
-                        </g>
-                        <g>
-                            <rect fill='red' y={y} x={width / 2 - lossBarWidth} width={lossBarWidth} height={barHeight}></rect>
-                            <foreignObject y={y} x={width / 2 - lossBarWidth} width={lossBarWidth} height={barHeight}>
-                                <p>{el.losses}</p>
-                            </foreignObject>
-                        </g>
-                    </g>
+                    <>
+                        <rect fill={winColour} y={y} x={width / 2} width={winBarWidth} height={barHeight}></rect>
+                        <foreignObject x={width / 2} y={y} width={winBarWidth} height={barHeight}>
+                            <p>{el.wins}</p>
+                        </foreignObject>
+                        <rect fill={lossColour} y={y} x={width / 2 - lossBarWidth} width={lossBarWidth} height={barHeight}></rect>
+                        <foreignObject y={y} x={width / 2 - lossBarWidth} width={lossBarWidth} height={barHeight}>
+                            <p>{el.losses}</p>
+                        </foreignObject>
+                    </>
                 )
             })}
         </svg>
