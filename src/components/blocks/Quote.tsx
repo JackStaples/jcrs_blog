@@ -5,9 +5,9 @@ const Quote = ({ quote, attribution, citation }: { quote: string, attribution: s
     return (
         <figure className={quoteDiv}>
             <blockquote>
-                <p>{quote}</p>
+                <p><em>{quote}</em></p>
             </blockquote>
-            <figcaption>-{attribution}, <cite>{citation}</cite></figcaption>
+            <figcaption>-{attribution}{citation ?(<cite>,{citation}</cite>) : (<></>)}</figcaption>
         </figure>
     )
 }

@@ -1,23 +1,23 @@
 ---
-title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-date: "2020-01-01"
-slug: "first-post"
-tag: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus massa vel urna interdum, ac pulvinar nisl porta."
-quote: "Use the force, Harry"
-attribution: "Gandalf"
-citation: "The Wheel of Time"
+title: "A Win/Loss Bargraph for the NHL"
+date: "2020-11-21"
+slug: "win-loss-bargraph-nhl"
+tag: "A simple win/loss bargraph visualization of NHL wins and losses."
+quote: "I mean, we’re on a nine-game heater, I’d say we’re doing okay"
+attribution: "Jack Hughes"
+citation: ""
 ---
 
 import { WinLossBarchart } from "../src/components/viz/WinLossBargraph";
 
 <main style={{'textAlign': 'center'}}>
-# Visualizing Wins and Loss
+# Wins and Loss in the NHL
 <WinLossBarchart 
     data={[{wins: 12, losses: 5},{wins: 14, losses: 1},{wins: 6, losses: 14},{wins: 9, losses: 10},{wins: 10, losses: 10}]}
     winColour="#005AB5"
     lossColour="#DC3220"
     barHeight={3}
     spacing={1}
+    axisLines={2}
 />
-
 </main>
