@@ -21,7 +21,7 @@ const Layout: React.FC<{ children: ReactNode[] }> = ({ children }) => {
     console.log(data);
     return (<div className={container}>
         <div className={header}>
-            <Link to='/'>Home</Link>
+            <Link to='/'>Articles</Link>
             <h1>JCRS</h1>
             <Link to={`/blog/${data.allMdx.nodes[0].frontmatter.slug}`}>Most Recent</Link>
         </div>

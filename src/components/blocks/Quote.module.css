@@ -1,0 +1,8 @@
+.quoteDiv {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.quoteDiv blockquote {
+    margin-bottom: 5px;
+}

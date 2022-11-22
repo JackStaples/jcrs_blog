@@ -1,8 +1,8 @@
 :root {
-    --background: #ffffff;
+    --background: #fff;
     --text: #000000;
     --secondary-text: #8b8a8a;
-    --tertiary-text: #f3f3f3;
+    --background-secondary: #f3f3f3;
     --highlight: #a71731;
 }
 
@@ -14,8 +14,8 @@ body {
     margin: auto;
     max-width: 500px;
     padding: 20px;
-    border-right: 2px solid var(--tertiary-text);
-    border-left: 2px solid var(--tertiary-text);
+    border-right: 2px solid var(--background-secondary);
+    border-left: 2px solid var(--background-secondary);
     font-family: "Times New Roman", "Georgia", "Arial"
 }
 
