@@ -33,7 +33,9 @@ function generateWinLossAxisLabels(maximum: number, increment: number): string[]
 export const WinLossBarchart = ({ data, winColour, lossColour, barHeight, axisLinesInterval }: Props) => {
     const spaceBetweenBars = barHeight / 3;
     let curY = strokeWidth + barHeight + spaceBetweenBars;
-    const height = (barHeight + spaceBetweenBars) * data.length + curY
+    const height = (barHeight + spaceBetweenBars) * data.length + curY;
+    const graphWidth = width - barHeight;
+    const sideBuffer = barHeight / 2;
 
     const mostWinsOrLosses = getMaximumWinsOrLosses(data);
     const axisText: string[] = generateWinLossAxisLabels(mostWinsOrLosses, axisLinesInterval);
@@ -43,16 +45,16 @@ export const WinLossBarchart = ({ data, winColour, lossColour, barHeight, axisLi
     return (
         <svg className={bargraph} viewBox={`0 0 ${width} ${height}`}>
             <rect
-                x={0}
+                x={0 + sideBuffer}
                 y={barHeight}
                 height={height - barHeight}
-                width={width}
+                width={graphWidth}
                 stroke='black'
                 fillOpacity={0}
                 strokeWidth={strokeWidth}
             />
             {Array.apply(0, Array(numberOfAxisLines + 1)).map((j, i) => {
-                const x = i * (width / numberOfAxisLines);
+                const x = i * (graphWidth / numberOfAxisLines) + sideBuffer;
                 const num = axisText[i] ?
                     axisText[i] :
                     numberOfAxisLines % 2 === 1 ?
@@ -81,8 +83,8 @@ export const WinLossBarchart = ({ data, winColour, lossColour, barHeight, axisLi
 
             })}
             {data.map((el) => {
-                const winBarWidth = (el.wins / mostWinsOrLosses) * (width / 2) - strokeWidth
-                const lossBarWidth = (el.losses / mostWinsOrLosses) * (width / 2) - strokeWidth
+                const winBarWidth = (el.wins / mostWinsOrLosses) * (graphWidth / 2) - strokeWidth
+                const lossBarWidth = (el.losses / mostWinsOrLosses) * (graphWidth / 2) - strokeWidth
                 const y = curY;
                 curY += barHeight + spaceBetweenBars;
                 return (
@@ -90,13 +92,13 @@ export const WinLossBarchart = ({ data, winColour, lossColour, barHeight, axisLi
                         <rect
                             fill={winColour}
                             y={y}
-                            x={width / 2}
+                            x={graphWidth / 2 + sideBuffer}
                             width={winBarWidth}
                             height={barHeight} />
                         <rect
                             fill={lossColour}
                             y={y}
-                            x={width / 2 - lossBarWidth}
+                            x={graphWidth / 2 - lossBarWidth + sideBuffer}
                             width={lossBarWidth}
                             height={barHeight} />
                     </>
