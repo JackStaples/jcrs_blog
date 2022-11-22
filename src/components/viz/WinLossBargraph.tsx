@@ -44,44 +44,8 @@ export const WinLossBarchart = ({ data, winColour, lossColour, barHeight, axisLi
 
     return (
         <svg className={bargraph} viewBox={`0 0 ${width} ${height}`}>
-            <rect
-                x={0 + sideBuffer}
-                y={barHeight}
-                height={height - barHeight}
-                width={graphWidth}
-                stroke='black'
-                fillOpacity={0}
-                strokeWidth={strokeWidth}
-            />
-            {Array.apply(0, Array(numberOfAxisLines + 1)).map((j, i) => {
-                const x = i * (graphWidth / numberOfAxisLines) + sideBuffer;
-                const num = axisText[i] ?
-                    axisText[i] :
-                    numberOfAxisLines % 2 === 1 ?
-                        axisText[(axisText.length - 1) - (i - axisText.length)] :
-                        axisText[(axisText.length - 2) - (i - axisText.length)];
-
-                return (
-                    <>
-                        <text
-                            y={barHeight}
-                            x={x - 1}
-                            style={{ fontSize: `${barHeight * 0.75}px` }}
-                        >
-                            {`${num}`}
-                        </text>
-                        <line
-                            x1={x}
-                            x2={x}
-                            y1={barHeight}
-                            y2={height}
-                            stroke='black'
-                            strokeWidth={strokeWidth}
-                            strokeOpacity={0.25} />
-                    </>
-                )
-
-            })}
+            {createEnclosingBox(sideBuffer, barHeight, height, graphWidth)}
+            {createAxisLines(numberOfAxisLines, graphWidth, sideBuffer, axisText, barHeight, height)}
             {data.map((el) => {
                 const winBarWidth = (el.wins / mostWinsOrLosses) * (graphWidth / 2) - strokeWidth
                 const lossBarWidth = (el.losses / mostWinsOrLosses) * (graphWidth / 2) - strokeWidth
@@ -107,3 +71,46 @@ export const WinLossBarchart = ({ data, winColour, lossColour, barHeight, axisLi
         </svg>
     )
 }
+function createEnclosingBox(sideBuffer: number, barHeight: number, height: number, graphWidth: number) {
+    return <rect
+        x={0 + sideBuffer}
+        y={barHeight}
+        height={height - barHeight}
+        width={graphWidth}
+        stroke='black'
+        fillOpacity={0}
+        strokeWidth={strokeWidth} />;
+}
+
+function createAxisLines(numberOfAxisLines: number, graphWidth: number, sideBuffer: number, axisText: string[], barHeight: number, height: number): React.ReactNode {
+    return Array.apply(0, Array(numberOfAxisLines + 1)).map((j, i) => {
+        const x = i * (graphWidth / numberOfAxisLines) + sideBuffer;
+        const num = axisText[i] ?
+            axisText[i] :
+            numberOfAxisLines % 2 === 1 ?
+                axisText[(axisText.length - 1) - (i - axisText.length)] :
+                axisText[(axisText.length - 2) - (i - axisText.length)];
+
+        return (
+            <>
+                <text
+                    y={barHeight}
+                    x={x - ((barHeight * num.length) / (barHeight * 2))}
+                    style={{ fontSize: `${barHeight * 0.75}px` }}
+                >
+                    {`${num}`}
+                </text>
+                <line
+                    x1={x}
+                    x2={x}
+                    y1={barHeight}
+                    y2={height}
+                    stroke='black'
+                    strokeWidth={strokeWidth}
+                    strokeOpacity={0.25} />
+            </>
+        );
+
+    });
+}
+
