@@ -16,7 +16,7 @@ body {
     padding: 20px;
     border-right: 2px solid var(--background-secondary);
     border-left: 2px solid var(--background-secondary);
-    font-family: "Times New Roman", "Georgia", "Arial"
+    font-family: "Helvetica"
 }
 
 .header {
@@ -32,7 +32,6 @@ body {
 .header h1 {
     text-align: center;
     color: var(--text);
-    font-family: "Brush Script MT", "Garamond";
 }
 
 a {
