@@ -3,7 +3,7 @@ import { bargraph } from './WinLossBargraph.module.css'
 import type { Colour } from '../../types/Colour'
 
 interface Props {
-    data: { wins: number, losses: number }[],
+    data: { wins: number, losses: number, name: string }[],
     winColour: Colour,
     lossColour: Colour,
     barHeight: number,
@@ -64,6 +64,14 @@ export const WinLossBarchart = ({ data, winColour, lossColour, barHeight, axisLi
                             x={graphWidth / 2 - lossBarWidth + sideBuffer}
                             width={lossBarWidth}
                             height={barHeight} />
+                        <text
+                            fill={'yellow'}
+                            y={y + (barHeight * 0.75)}
+                            x={(graphWidth / 2 + sideBuffer) - ((el.name.length / 2))}
+                            style={{ fontSize: `${barHeight * 0.6}px` }}
+                        >
+                            {el.name}
+                        </text>
                     </>
                 )
             })}
