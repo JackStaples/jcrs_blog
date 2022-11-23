@@ -22,14 +22,22 @@ function getMaximumWinsOrLosses(data: { wins: number, losses: number }[]) {
 
 function generateWinLossAxisLabels(maximum: number, increment: number): string[] {
     const retVal: string[] = [];
-
     for (let i = maximum; i >= 0; i -= increment) {
         retVal.push(String(i));
     }
+    let i = retVal.length - 1;
+    if (maximum % 2 === 0) {
+        i -= 1;
+    }
+    for (; i >= 0; i--) {
+        retVal.push(retVal[i]);
+    }
+
     return retVal;
 }
 
 export const WinLossBarchart = ({ data, winColour, lossColour, barHeight, axisLinesInterval }: Props) => {
+    if (data.length === 0) return (<></>);
     const spaceBetweenBars = barHeight / 3;
     let curY = strokeWidth + barHeight + spaceBetweenBars;
     const height = (barHeight + spaceBetweenBars) * data.length + curY;
@@ -39,7 +47,7 @@ export const WinLossBarchart = ({ data, winColour, lossColour, barHeight, axisLi
     const mostWinsOrLosses = getMaximumWinsOrLosses(data);
     const axisText: string[] = generateWinLossAxisLabels(mostWinsOrLosses, axisLinesInterval);
 
-    const numberOfAxisLines = Math.round((mostWinsOrLosses * 2) / axisLinesInterval);
+    const numberOfAxisLines = axisText.length;
 
     return (
         <svg className={bargraph} viewBox={`0 0 ${width} ${height}`}>
@@ -89,23 +97,18 @@ function createEnclosingBox(sideBuffer: number, barHeight: number, height: numbe
         strokeWidth={strokeWidth} />;
 }
 
-function createAxisLines(numberOfAxisLines: number, graphWidth: number, sideBuffer: number, axisText: string[], barHeight: number, height: number): React.ReactNode {
-    return Array.apply(0, Array(numberOfAxisLines + 1)).map((j, i) => {
-        const x = i * (graphWidth / numberOfAxisLines) + sideBuffer;
-        const num = axisText[i] ?
-            axisText[i] :
-            numberOfAxisLines % 2 === 1 ?
-                axisText[(axisText.length - 1) - (i - axisText.length)] :
-                axisText[(axisText.length - 2) - (i - axisText.length)];
-
+function createAxisLines(count: number, width: number, sideBuffer: number, axisText: string[], barHeight: number, height: number): React.ReactNode {
+    const spaceBetween = width / (count - 1);
+    return Array.apply(0, Array(count)).map((j, i) => {
+        const x = i * spaceBetween + sideBuffer;
         return (
             <>
                 <text
                     y={barHeight}
-                    x={x - ((barHeight * num.length) / (barHeight * 2))}
+                    x={x - ((barHeight * axisText[i].length) / (barHeight * 2))}
                     style={{ fontSize: `${barHeight * 0.75}px` }}
                 >
-                    {`${num}`}
+                    {`${axisText[i]}`}
                 </text>
                 <line
                     x1={x}

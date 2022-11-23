@@ -18,7 +18,6 @@ const Layout: React.FC<{ children: ReactNode[] }> = ({ children }) => {
             }
         }
     `);
-    console.log(data);
     return (<div className={container}>
         <div className={header}>
             <Link to='/'>Articles</Link>
