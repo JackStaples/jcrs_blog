@@ -35,6 +35,7 @@ export const NhlTeamWinLossBargraph = () => {
     const [data, setData] = useState<TeamData[]>([]);
     const [divisions, setDivisions] = useState<Set<option>>(new Set());
     const [division, setDivision] = useState(0);
+    const [sort, setSort] = useState(1);
 
     useEffect(() => {
         fetch(api)
@@ -60,7 +61,7 @@ export const NhlTeamWinLossBargraph = () => {
     }, [])
     const dataToPass: TeamData[] = [];
     for (const datum of data) {
-        if (division) {
+        if (division > 0) {
             if (division === datum.division) {
                 dataToPass.push(datum);
             }
@@ -69,16 +70,33 @@ export const NhlTeamWinLossBargraph = () => {
         }
 
     }
+
+    if (sort) {
+        dataToPass.sort(getSorting(sort))
+    }
+
     return (
         <>
-            <select onChange={e => { setDivision(parseInt(e.target.value)) }}>
-                <option value={0}>None</option>
-                {[...divisions.values()].map(el => {
-                    return (
-                        <option value={el.id}>{el.label}</option>
-                    )
-                })}
-            </select>
+            <div>
+                <label htmlFor='order'>Order: </label>
+                <select name='order' value={sort} onChange={e => setSort(parseInt(e.target.value))}>
+                    <option value={1}>By Wins</option>
+                    <option value={2}>By Losses</option>
+                    <option value={3}>By Games Played</option>
+                    <option value={4}>By Team Name</option>
+                </select>
+            </div>
+            <div>
+                <label htmlFor='division'>Division: </label>
+                <select name='division' onChange={e => { setDivision(parseInt(e.target.value)) }}>
+                    <option value={0}>None</option>
+                    {[...divisions.values()].map(el => {
+                        return (
+                            <option value={el.id}>{el.label}</option>
+                        )
+                    })}
+                </select>
+            </div>
             <WinLossBarchart
                 data={dataToPass}
                 winColour="#005AB5"
@@ -88,4 +106,25 @@ export const NhlTeamWinLossBargraph = () => {
             />
         </>
     )
+}
+
+function getSorting(val: number) {
+    switch (val) {
+        case 1:
+            return (a: TeamData, b: TeamData) => {
+                return -(a.wins - b.wins);
+            }
+        case 2:
+            return (a: TeamData, b: TeamData) => {
+                return (a.wins - b.wins);
+            }
+        case 3:
+            return (a: TeamData, b: TeamData) => {
+                return -((a.wins + a.losses) - (b.wins + b.losses));
+            }
+        case 4:
+            return (a: TeamData, b: TeamData) => {
+                return a.name.localeCompare(b.name);
+            }
+    }
 }
