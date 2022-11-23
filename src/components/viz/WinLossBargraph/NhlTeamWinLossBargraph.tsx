@@ -89,7 +89,7 @@ export const NhlTeamWinLossBargraph = () => {
             <div>
                 <label htmlFor='division'>Division: </label>
                 <select name='division' onChange={e => { setDivision(parseInt(e.target.value)) }}>
-                    <option value={0}>None</option>
+                    <option value={0}>All</option>
                     {[...divisions.values()].map(el => {
                         return (
                             <option value={el.id}>{el.label}</option>
