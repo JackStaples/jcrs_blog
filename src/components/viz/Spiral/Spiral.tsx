@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import RangeWithButtons from "../../blocks/buttons/RangeWithButtons";
+import StandardAxisSVG from "../../blocks/StandardAxisSVG";
 import type { Coordinates } from "../../../types/Coordinates";
 
 const generateCoordinates = (
@@ -29,55 +31,31 @@ export const Spiral = () => {
     <>
       <div>
         <div>
-          <input
-            type="range"
-            min="0"
-            max="100"
-            value={a}
-            onChange={(e) => setA(parseInt(e.target.value))}
-          />
+          <RangeWithButtons onClick={setA} value={a} min={0} max={100} />
           {a}
-          <button
-            onClick={() => {
-              setA(a + 1);
-            }}
-          >
-            +
-          </button>
-          <button
-            onClick={() => {
-              setA(a - 1);
-            }}
-          >
-            -
-          </button>
         </div>
         <div>
-          <input
-            type="range"
-            min="0"
-            max="25"
-            value={b}
-            onChange={(e) => setB(parseInt(e.target.value))}
-          />
+          <RangeWithButtons onClick={setB} value={b} min={0} max={25} />
           {b}
-          <button
-            onClick={() => {
-              setB(b + 1);
-            }}
-          >
-            +
-          </button>
-          <button
-            onClick={() => {
-              setB(b - 1);
-            }}
-          >
-            -
-          </button>
         </div>
       </div>
-      <svg viewBox={`0 0 ${size} ${size}`}>
+      <StandardAxisSVG height={size} width={size}>
+        <line
+          x1={500}
+          x2={0}
+          y1={250}
+          y2={250}
+          stroke="black"
+          strokeOpacity={0.15}
+        />
+        <line
+          x1={250}
+          x2={250}
+          y1={500}
+          y2={0}
+          stroke="black"
+          strokeOpacity={0.15}
+        />
         <polyline
           fill="none"
           stroke="black"
@@ -85,7 +63,7 @@ export const Spiral = () => {
             return `${b.x},${b.y} ${a}`;
           }, "")}
         />
-      </svg>
+      </StandardAxisSVG>
     </>
   );
 };
