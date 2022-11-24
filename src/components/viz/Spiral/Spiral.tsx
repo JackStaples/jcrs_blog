@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import RangeWithButtons from "../../blocks/buttons/RangeWithButtons";
 import StandardAxisSVG from "../../blocks/StandardAxisSVG";
+import { control, controls, equation } from './Spiral.module.css';
 import type { Coordinates } from "../../../types/Coordinates";
 
 const generateCoordinates = (
@@ -29,14 +30,13 @@ export const Spiral = () => {
   const points = generateCoordinates(a, b, size, size / 2);
   return (
     <>
-      <div>
-        <div>
+      <div className={equation}>r = {a} + {b} * θ</div>
+      <div className={controls}>
+        <div className={control}>
           <RangeWithButtons onClick={setA} value={a} min={0} max={100} />
-          {a}
         </div>
-        <div>
+        <div className={control}>
           <RangeWithButtons onClick={setB} value={b} min={0} max={25} />
-          {b}
         </div>
       </div>
       <StandardAxisSVG height={size} width={size}>

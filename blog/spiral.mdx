@@ -1,5 +1,5 @@
 ---
-title: "The Archimedian Spiral"
+title: "The Archimedean Spiral"
 date: "2022-11-23"
 slug: "spiral"
 tag: "A place to draw spirals"
@@ -8,8 +8,28 @@ attribution: "Matt Spencer"
 citation: "Avenue 5"
 ---
 
-# The Archimedian Spiral
+<span style={{ textAlign: "center" }}>
+# The Archimedean Spiral
 
-import { Spiral } from "../src/components/viz/Spiral/Spiral";
+The Archimedean spiral is notable for rotating around a single point at a constant speed and velocity. This creates an aesthetically pleasing and consistent spiral, often used in architecture.
+
+<br />
+Its polar coordinates are defined by the following equation:
+
+<p align="center" style={{ "font-size": "20px" }}>
+  ``` r = a + bθ ```
+</p>
+</span>
+<br />
+
+| variable | meaning                                                                                                                  |
+| -------- | ------------------------------------------------------------------------------------------------------------------------ |
+| r        | The radial coordinate, representing the distance from the point of origin                                                |
+| θ        | The angular coordinate, the angle relative to the reference direction (horizontally to the right of the point of origin) |
+| a        | The offset, how far from the point of origin the spiral should begin                                                     |
+| b        | The distance between the loops of the spiral                                                                             |
+
+<br />
+import {Spiral} from "../src/components/viz/Spiral/Spiral";
 
 <Spiral />
