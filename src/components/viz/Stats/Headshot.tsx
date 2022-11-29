@@ -3,7 +3,6 @@ import React from 'react';
 export const Headshot: React.FC<{ playerId: number, x: number, y: number, radius: number }> = ({ playerId, x, y, radius }) => {
     const startX = x - radius;
     const endX = x + radius;
-    console.log(startX, endX)
     return (
         <>
             <path d={`M${startX},${y} A5 5 0 0 1 ${endX} ${y}`} fill="transparent" stroke="lightgray" strokeWidth={0.5}>
