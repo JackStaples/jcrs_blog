@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { PlayerPicture } from "./PlayerPicture";
 import { PlayerName } from "./PlayerName";
 import { PlayerInformation } from "./PlayerInformation";
+import { TeamSelect } from "../Stats/TeamSelect";
+import { PlayerSelect } from "../Stats/PlayerSelect";
 
 export const PlayerCard = () => {
+  const [selectedTeamId, setSelectedTeamId] = useState(53);
+  const [selectedPlayerId, setSelectedPlayerId] = useState(0);
   return (
     <>
+      <div>
+        <TeamSelect
+          onChange={setSelectedTeamId}
+          selectedTeam={selectedTeamId}
+        />
+        <PlayerSelect
+          selectedPlayer={selectedPlayerId}
+          selectedTeam={selectedTeamId}
+          onChange={setSelectedPlayerId}
+        />
+      </div>
       <svg viewBox="0 0 100 200">
         <rect
           width={99}
@@ -24,7 +39,7 @@ export const PlayerCard = () => {
           number={"97"}
           birthPlace={"Richmond, ON"}
         />
-        <PlayerPicture playerId={8478402} />
+        <PlayerPicture playerId={selectedPlayerId} />
         <PlayerName playerName="Connor McDavid" />
       </svg>
     </>
