@@ -4,10 +4,18 @@ export interface Player {
   position: Postion;
 }
 
-interface Person {
+export interface Person {
   id: number;
   fullName: string;
   link: string;
+  primaryNumber: string;
+  birthDate: string;
+  birthCity: string;
+  birthState: string;
+  birthCountry: string;
+  height: string;
+  weight: string;
+  shootsCatches: string;
 }
 
 interface Postion {

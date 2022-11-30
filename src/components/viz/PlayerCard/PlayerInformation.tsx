@@ -1,12 +1,12 @@
 import React from "react";
 
 export const PlayerInformation: React.FC<{
-  height: string;
-  weight: string;
-  shoots: string;
-  number: string;
-  birthDate: string;
-  birthPlace: string;
+  height?: string;
+  weight?: string;
+  shoots?: string;
+  number?: string;
+  birthDate?: string;
+  birthPlace?: string;
 }> = ({ height, weight, shoots, birthDate, number, birthPlace }) => {
   const font = "Georgia";
   return (

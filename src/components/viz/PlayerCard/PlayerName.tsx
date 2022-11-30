@@ -1,7 +1,7 @@
 import React from "react";
 
 export const PlayerName: React.FC<{
-  playerName: string;
+  playerName?: string;
 }> = ({ playerName }) => {
   return (
     <>
