@@ -62,6 +62,7 @@ export const PlayerCard = () => {
           birthDate={selectedPerson?.birthDate}
           number={selectedPerson?.primaryNumber}
           birthPlace={`${selectedPerson?.birthCity}, ${selectedPerson?.birthCountry}`}
+          teamId={selectedTeamId}
         />
         <PlayerPicture playerId={selectedPlayerId} />
         <PlayerName playerName={selectedPerson?.fullName} />

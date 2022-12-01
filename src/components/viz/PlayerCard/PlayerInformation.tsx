@@ -1,4 +1,5 @@
 import React from "react";
+import { TeamLogo } from "./TeamLogo";
 
 export const PlayerInformation: React.FC<{
   height?: string;
@@ -7,7 +8,8 @@ export const PlayerInformation: React.FC<{
   number?: string;
   birthDate?: string;
   birthPlace?: string;
-}> = ({ height, weight, shoots, birthDate, number, birthPlace }) => {
+  teamId: number;
+}> = ({ height, weight, shoots, birthDate, number, birthPlace, teamId }) => {
   const font = "Georgia";
   return (
     <>
@@ -80,14 +82,7 @@ export const PlayerInformation: React.FC<{
       >
         {birthPlace}
       </text>
-      <circle
-        cx="42"
-        cy="20"
-        r="12.5"
-        fill="transparent"
-        stroke="black"
-        strokeWidth={0.1}
-      ></circle>
+      <TeamLogo teamId={teamId} />
     </>
   );
 };
