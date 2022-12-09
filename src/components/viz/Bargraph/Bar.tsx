@@ -12,7 +12,6 @@ export const Bar: React.FC<props> = ({ x, y, height, width, colour }) => {
     const prevWidth = useRef(0)
     let animationRef: SVGAnimateElement;
     useEffect(() => {
-        console.info(width)
         prevWidth.current = width;
         if (animationRef) {
             animationRef.beginElement();

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Bargraph } from "./Bargraph";
 
 export const BargraphComponent = () => {
-  const [data, setData] = useState([{ length: 25 }, { length: 55 }, { length: 35 }]);
+  const [data, setData] = useState([{ length: 25 }, { length: 55 }, { length: 35 }, { length: 92 }, { length: 36 }]);
   return <>
     <Bargraph data={data} />
     <button onClick={() => {
