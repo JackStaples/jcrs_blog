@@ -1,4 +1,5 @@
 import React from "react";
+import { Bar } from "./Bar";
 
 export const Bargraph: React.FC<{ data: { length: number }[] }> = ({
   data,
@@ -9,17 +10,17 @@ export const Bargraph: React.FC<{ data: { length: number }[] }> = ({
       <svg viewBox="0 0 100 100">
         {data.map((el, i) => {
           return (
-            <rect
+            <Bar
+              key={space * i}
               x={0}
               y={space * i}
               height={20}
               width={el.length}
-              fill="black"
-            ></rect>
-          );
+              colour="black"
+            />
+          )
         })}
       </svg>
-      ;
     </>
   );
 };
