@@ -1,19 +1,36 @@
 import React, { useState } from "react";
 import { Bargraph } from "./Bargraph";
+import { CanadaAirportTrafficData } from "../data/CanadaAirportTraffic";
 
 export const BargraphComponent = () => {
+  const options: string[] = [];
+  CanadaAirportTrafficData.forEach(el => {
+    options.push(el.title);
+  });
   const [data, setData] = useState([{ value: 25 }, { value: 55, isSelected: true }, { value: 35 }, { value: 92 }, { value: 36 }]);
-  const scale = (value: number) => {
-    return value;
-  }
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(100);
   return <>
-    <Bargraph data={data} scale={scale} />
-    <button onClick={() => {
+    <select onChange={(event) => {
+      const airport = CanadaAirportTrafficData[parseInt(event.currentTarget.value)];
       const newData = [];
-      for (const el of data) {
-        newData.push({ value: el.value - 10 });
+      let max = 0;
+      let min = 0;
+      for (const year in airport.data) {
+        const val = parseInt(airport.data[year]);
+        if (val > max) max = val;
+        if (val < min) min = val;
+        newData.push({ value: val });
       }
+      setMin(min);
+      setMax(max);
       setData(newData);
-    }}>Click Me
-    </button>  </>
+    }}>
+      {options.map((name, i) => (<option key={i} value={i}>{name}</option>))}
+    </select>
+    <Bargraph data={data} scale={(value: number) => {
+      console.log(value)
+      return (value - min) / (max - min) * 100;
+    }} />
+  </>
 };

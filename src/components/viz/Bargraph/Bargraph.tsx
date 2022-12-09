@@ -8,6 +8,7 @@ export const Bargraph: React.FC<{
   scale,
   data,
 }) => {
+    console.log(scale)
     const spacer = 15 / data.length;
     const height = 90 / data.length - spacer;
     return (
