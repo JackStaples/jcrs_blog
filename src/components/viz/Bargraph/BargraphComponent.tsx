@@ -29,7 +29,6 @@ export const BargraphComponent = () => {
       {options.map((name, i) => (<option key={i} value={i}>{name}</option>))}
     </select>
     <Bargraph data={data} scale={(value: number) => {
-      console.log(value)
       return (value - min) / (max - min) * 100;
     }} />
   </>
