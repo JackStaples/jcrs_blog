@@ -7,19 +7,21 @@ const offsetScale = (value: number) => {
 };
 
 export const Bargraph: React.FC<{
+  title: string,
   scale: (val: number) => number;
   data: { title: string; value: number; isSelected?: boolean }[];
-}> = ({ scale, data }) => {
+}> = ({ title, scale, data }) => {
   const spacer = 15 / data.length;
   const height = 90 / data.length - spacer;
   return (
     <>
       <svg viewBox="0 0 100 100">
+        <text x="10%" y={7} fontSize={7} textLength={80} lengthAdjust={"spacingAndGlyphs"}>{title}</text>
         <line
           x1={offset}
           x2={100 - offset}
-          y1={9}
-          y2={9}
+          y1={10}
+          y2={10}
           stroke="black"
           strokeWidth={0.2}
         />

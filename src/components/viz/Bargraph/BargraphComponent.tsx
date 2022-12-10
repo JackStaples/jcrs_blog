@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Bargraph } from "./Bargraph";
 import { CanadaAirportTrafficData } from "../data/CanadaAirportTraffic";
+import type { Airport } from "../data/CanadaAirportTraffic";
 
-const getData = (index: number) => {
-  const airport = CanadaAirportTrafficData[index];
+const getData = (airport: Airport) => {
   const newData = [];
   let max = 0;
   let min = 0;
@@ -22,7 +22,8 @@ export const BargraphComponent = () => {
     options.push(el.title);
   });
   const [selectedValue, setSelectedValue] = useState(0);
-  const dataset = getData(selectedValue);
+  const airport = CanadaAirportTrafficData[selectedValue];
+  const dataset = getData(airport);
   return (
     <>
       <select
@@ -31,12 +32,13 @@ export const BargraphComponent = () => {
         }}
       >
         {options.map((name, i) => (
-          <option key={`${i}${parseInt(event.currentTarget.value)}`} value={i}>
+          <option key={`${i}${parseInt(name)}`} value={i}>
             {name}
           </option>
         ))}
       </select>
       <Bargraph
+        title={airport.title}
         data={dataset.data}
         scale={(value: number) => {
           return ((value - dataset.min) / (dataset.max - dataset.min)) * 100;

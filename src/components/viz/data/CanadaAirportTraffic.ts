@@ -1,6 +1,6 @@
 export const CanadaAirportTrafficData = [
   {
-    title: "Halifax/Robert L Stanfield International, Nova Scotia",
+    title: "Robert L Stanfield International, Halifax",
     data: [
       { title: "2017", value: 3984504 },
       { title: "2018", value: 4252361 },
@@ -10,7 +10,7 @@ export const CanadaAirportTrafficData = [
     ],
   },
   {
-    title: "Montréal/Pierre Elliott Trudeau International, Quebec",
+    title: "Pierre Elliott Trudeau International, Montréal",
     data: [
       { title: "2017", value: 17556017 },
       { title: "2018", value: 18804524 },
@@ -80,3 +80,8 @@ export const CanadaAirportTrafficData = [
   //   },
   // },
 ];
+
+export interface Airport {
+  title: string;
+  data: { title: string; value: number }[];
+}
