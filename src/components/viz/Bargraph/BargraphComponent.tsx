@@ -2,34 +2,46 @@ import React, { useState } from "react";
 import { Bargraph } from "./Bargraph";
 import { CanadaAirportTrafficData } from "../data/CanadaAirportTraffic";
 
+const getData = (index: number) => {
+  const airport = CanadaAirportTrafficData[index];
+  const newData = [];
+  let max = 0;
+  let min = 0;
+  for (const year of airport.data) {
+    const { value } = year;
+    if (value > max) max = value;
+    if (value < min) min = value;
+    newData.push(year);
+  }
+  return { min, max, data: newData };
+};
+
 export const BargraphComponent = () => {
   const options: string[] = [];
-  CanadaAirportTrafficData.forEach(el => {
+  CanadaAirportTrafficData.forEach((el) => {
     options.push(el.title);
   });
-  const [data, setData] = useState([{ value: 25 }, { value: 55, isSelected: true }, { value: 35 }, { value: 92 }, { value: 36 }]);
-  const [min, setMin] = useState(0);
-  const [max, setMax] = useState(100);
-  return <>
-    <select onChange={(event) => {
-      const airport = CanadaAirportTrafficData[parseInt(event.currentTarget.value)];
-      const newData = [];
-      let max = 0;
-      let min = 0;
-      for (const year in airport.data) {
-        const val = parseInt(airport.data[year]);
-        if (val > max) max = val;
-        if (val < min) min = val;
-        newData.push({ value: val });
-      }
-      setMin(min);
-      setMax(max);
-      setData(newData);
-    }}>
-      {options.map((name, i) => (<option key={i} value={i}>{name}</option>))}
-    </select>
-    <Bargraph data={data} scale={(value: number) => {
-      return (value - min) / (max - min) * 100;
-    }} />
-  </>
+  const [selectedValue, setSelectedValue] = useState(0);
+  const dataset = getData(selectedValue);
+  return (
+    <>
+      <select
+        onChange={(event) => {
+          setSelectedValue(parseInt(event.currentTarget.value));
+        }}
+      >
+        {options.map((name, i) => (
+          <option key={`${i}${parseInt(event.currentTarget.value)}`} value={i}>
+            {name}
+          </option>
+        ))}
+      </select>
+      <Bargraph
+        data={dataset.data}
+        scale={(value: number) => {
+          return ((value - dataset.min) / (dataset.max - dataset.min)) * 100;
+        }}
+      />
+    </>
+  );
 };

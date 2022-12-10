@@ -1,24 +1,36 @@
 import React from "react";
 import { Bar } from "./Bar";
 
+const offset = 1;
+const offsetScale = (value: number) => {
+  return (value / 100) * (100 - offset * 2);
+};
+
 export const Bargraph: React.FC<{
   scale: (val: number) => number;
-  data: { value: number; isSelected?: boolean }[];
+  data: { title: string; value: number; isSelected?: boolean }[];
 }> = ({ scale, data }) => {
   const spacer = 15 / data.length;
   const height = 90 / data.length - spacer;
   return (
     <>
       <svg viewBox="0 0 100 100">
-        <line x1={0} x2={100} y1={9} y2={9} stroke="black" strokeWidth={0.2} />
+        <line
+          x1={offset}
+          x2={100 - offset}
+          y1={9}
+          y2={9}
+          stroke="black"
+          strokeWidth={0.2}
+        />
         {data.map((el, i) => {
           return (
             <Bar
-              key={height * i}
-              x={0}
+              key={el.title}
+              x={offset}
               y={(height + spacer) * i + 10 + spacer / 2}
               height={height}
-              width={scale(el.value)}
+              width={offsetScale(scale(el.value))}
               colour={"#c8c2ba"}
               hoverColour={"#2AA9D5"}
               selectedColour={"black"}
