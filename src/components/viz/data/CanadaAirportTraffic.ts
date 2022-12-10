@@ -1,22 +1,22 @@
-export const CanadaAirportTrafficData = [
+export const CanadaAirportTrafficData: Airport[] = [
   {
     title: "Robert L Stanfield International, Halifax",
     data: [
-      { title: "2017", value: 3984504 },
-      { title: "2018", value: 4252361 },
-      { title: "2019", value: 4128803 },
-      { title: "2020", value: 975018 },
-      { title: "2021", value: 1048821 },
+      { year: 2017, value: 3984504 },
+      { year: 2018, value: 4252361 },
+      { year: 2019, value: 4128803 },
+      { year: 2020, value: 975018 },
+      { year: 2021, value: 1048821 },
     ],
   },
   {
     title: "Pierre Elliott Trudeau International, Montréal",
     data: [
-      { title: "2017", value: 17556017 },
-      { title: "2018", value: 18804524 },
-      { title: "2019", value: 19578357 },
-      { title: "2020", value: 5178197 },
-      { title: "2021", value: 4976961 },
+      { year: 2017, value: 17556017 },
+      { year: 2018, value: 18804524 },
+      { year: 2019, value: 19578357 },
+      { year: 2020, value: 5178197 },
+      { year: 2021, value: 4976961 },
     ],
   },
   // {
@@ -83,5 +83,5 @@ export const CanadaAirportTrafficData = [
 
 export interface Airport {
   title: string;
-  data: { title: string; value: number }[];
+  data: { year: number; value: number }[];
 }

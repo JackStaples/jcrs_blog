@@ -9,7 +9,7 @@ const offsetScale = (value: number) => {
 export const Bargraph: React.FC<{
   title: string,
   scale: (val: number) => number;
-  data: { title: string; value: number; isSelected?: boolean }[];
+  data: { year: number; value: number; isSelected?: boolean }[];
 }> = ({ title, scale, data }) => {
   const spacer = 15 / data.length;
   const height = 90 / data.length - spacer;
@@ -28,7 +28,7 @@ export const Bargraph: React.FC<{
         {data.map((el, i) => {
           return (
             <Bar
-              key={el.title}
+              key={el.year}
               x={offset}
               y={(height + spacer) * i + 10 + spacer / 2}
               height={height}

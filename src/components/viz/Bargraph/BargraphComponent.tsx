@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Bargraph } from "./Bargraph";
+import { Linegraph } from "../Linegraph/Linegraph";
 import { CanadaAirportTrafficData } from "../data/CanadaAirportTraffic";
 import type { Airport } from "../data/CanadaAirportTraffic";
 
@@ -37,6 +38,7 @@ export const BargraphComponent = () => {
           </option>
         ))}
       </select>
+      <Linegraph<{ year: number; value: number }> dataset={CanadaAirportTrafficData} xValue="value" yValue="year" />
       <Bargraph
         title={airport.title}
         data={dataset.data}
