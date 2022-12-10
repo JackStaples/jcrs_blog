@@ -38,7 +38,22 @@ export const BargraphComponent = () => {
           </option>
         ))}
       </select>
-      <Linegraph<{ year: number; value: number }> dataset={CanadaAirportTrafficData} xValue="value" yValue="year" />
+      <Linegraph<{ year: number; value: number }>
+        dataset={CanadaAirportTrafficData}
+        xValue="year"
+        xScale={
+          (value: number) => {
+            return ((value - 2017) / (4)) * 100;
+          }
+        }
+        yValue="value"
+        yScale={
+          (value: number) => {
+            return 100 - ((value) / (19578357)) * 100;
+
+          }
+        }
+      />
       <Bargraph
         title={airport.title}
         data={dataset.data}
