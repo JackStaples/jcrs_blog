@@ -5,6 +5,7 @@ interface props {
     y: number;
     radius: number;
     colour: string;
+    onSelect?: () => void;
     hoverColour?: string;
     selectedColour?: string;
 }
@@ -16,6 +17,7 @@ export const Point: React.FC<props> = ({
     colour,
     hoverColour,
     selectedColour,
+    onSelect
 }) => {
     const [isHovered, setIsHovered] = useState(false);
     const [isSelected, setIsSelected] = useState(false);
@@ -40,6 +42,7 @@ export const Point: React.FC<props> = ({
     if (selectedColour) {
         circleProps.onClick = () => {
             setIsSelected(!isSelected);
+            if (onSelect) onSelect();
         };
     }
 

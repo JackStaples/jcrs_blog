@@ -53,6 +53,9 @@ export const BargraphComponent = () => {
 
           }
         }
+        onPointSelect={(setIndex: number, dataIndex: number) => {
+          console.log(CanadaAirportTrafficData[setIndex].data[dataIndex]);
+        }}
       />
       <Bargraph
         title={airport.title}
