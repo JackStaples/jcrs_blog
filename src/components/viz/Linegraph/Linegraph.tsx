@@ -1,5 +1,6 @@
 import React from "react";
 import { Point } from "./Point";
+import { DottedLine } from "./DottedLine";
 
 const offset = 10;
 const offsetScale = (value: number) => {
@@ -13,7 +14,8 @@ const createPoint = (x: number, y: number, onSelect?: () => void) => (<Point
     selectedColour={"red"}
     onSelect={onSelect}
 />)
-export const Linegraph = <T extends Record<string, any>>({ dataset, xValue, xScale, yValue, yScale, onPointSelect }: {
+
+interface LinegraphProps<T> {
     dataset: {
         title: string;
         data: T[];
@@ -23,33 +25,34 @@ export const Linegraph = <T extends Record<string, any>>({ dataset, xValue, xSca
     yValue: keyof T;
     yScale: (val: number) => number;
     onPointSelect: (setIndex: number, dataIndex: number) => void;
-}) => {
-    const points = [];
-    const paths = [];
-    for (let i = 0; i < dataset.length; i++) {
-        const data = dataset[i].data;
-        for (let j = 0; j < data.length; j++) {
-            const x = offsetScale(xScale(data[j][xValue]));
-            const y = offsetScale(yScale(data[j][yValue]));
-            const point = createPoint(x, y, () => {
-                onPointSelect(i, j)
-            });
-            points.push(point);
-            if (!paths[i]) {
-                paths.push(`M${x} ${y}`)
-            } else {
-                paths[i] += ` L${x} ${y}`
-            }
-        }
-    }
+    colourGenerator?: (index: number) => string;
+}
 
+export const Linegraph = <T extends Record<string, any>>({ dataset, xValue, xScale, yValue, yScale, onPointSelect }: LinegraphProps<T>) => {
     return (
         <>
             <svg viewBox="0 0 100 100">
-                {paths.map(path => {
-                    return <path d={path} fillOpacity={0} stroke="black" strokeWidth={0.5} />
-                })}
-                {points.map(el => el)}
+                {
+                    dataset.map((set, i) => {
+                        return <DottedLine
+                            data={set.data}
+                            xValue={xValue}
+                            xScale={(val: number) => {
+                                return offsetScale(xScale(val));
+                            }}
+                            yValue={yValue}
+                            yScale={(val: number) => {
+                                return offsetScale(yScale(val));
+                            }}
+                            colour="black"
+                            onSelect={
+                                (j: number) => {
+                                    onPointSelect(i, j);
+                                }
+                            }
+                        />
+                    })
+                }
             </svg>
         </>
     );
