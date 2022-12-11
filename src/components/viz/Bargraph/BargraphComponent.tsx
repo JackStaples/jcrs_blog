@@ -22,22 +22,12 @@ export const BargraphComponent = () => {
   CanadaAirportTrafficData.forEach((el) => {
     options.push(el.title);
   });
+  const [data, setData] = useState<{ year: number; value: number }[]>([]);
   const [selectedValue, setSelectedValue] = useState(0);
   const airport = CanadaAirportTrafficData[selectedValue];
   const dataset = getData(airport);
   return (
     <>
-      <select
-        onChange={(event) => {
-          setSelectedValue(parseInt(event.currentTarget.value));
-        }}
-      >
-        {options.map((name, i) => (
-          <option key={`${i}${parseInt(name)}`} value={i}>
-            {name}
-          </option>
-        ))}
-      </select>
       <Linegraph<{ year: number; value: number }>
         dataset={CanadaAirportTrafficData}
         xValue="year"
@@ -54,12 +44,14 @@ export const BargraphComponent = () => {
           }
         }
         onPointSelect={(setIndex: number, dataIndex: number) => {
-          console.log(CanadaAirportTrafficData[setIndex].data[dataIndex]);
+          const newData = [...data];
+          newData.push(CanadaAirportTrafficData[setIndex].data[dataIndex]);
+          setData(newData)
         }}
       />
       <Bargraph
-        title={airport.title}
-        data={dataset.data}
+        title={"Clicked"}
+        data={data}
         scale={(value: number) => {
           return ((value - dataset.min) / (dataset.max - dataset.min)) * 100;
         }}
