@@ -2,30 +2,24 @@ import React, { useState } from "react";
 import { Bargraph } from "./Bargraph";
 import { Linegraph } from "../Linegraph/Linegraph";
 import { CanadaAirportTrafficData } from "../data/CanadaAirportTraffic";
-import type { Airport } from "../data/CanadaAirportTraffic";
 
-const getData = (airport: Airport) => {
-  const newData = [];
-  let max = 0;
-  let min = 0;
-  for (const year of airport.data) {
-    const { value } = year;
-    if (value > max) max = value;
-    if (value < min) min = value;
-    newData.push(year);
-  }
-  return { min, max, data: newData };
-};
-
+const indexes: boolean[][] = [];
 export const BargraphComponent = () => {
-  const options: string[] = [];
-  CanadaAirportTrafficData.forEach((el) => {
-    options.push(el.title);
-  });
-  const [data, setData] = useState<{ year: number; value: number }[]>([]);
-  const [selectedValue, setSelectedValue] = useState(0);
-  const airport = CanadaAirportTrafficData[selectedValue];
-  const dataset = getData(airport);
+  let [reload, setReload] = useState(0);
+  const dataset: { year: number; value: number }[] = [];
+  let min = 0; let max = 0;
+  for (let i = 0; i < indexes.length; i++) {
+    if (!indexes[i]) continue;
+    for (let j = 0; j < indexes[i].length; j++) {
+      if (indexes[i][j]) {
+        dataset.push(CanadaAirportTrafficData[i].data[j])
+        if (CanadaAirportTrafficData[i].data[j].value < min) min = CanadaAirportTrafficData[i].data[j].value;
+        if (CanadaAirportTrafficData[i].data[j].value > max) max = CanadaAirportTrafficData[i].data[j].value;
+      }
+    }
+  }
+
+  console.log(dataset)
   return (
     <>
       <Linegraph<{ year: number; value: number }>
@@ -44,16 +38,20 @@ export const BargraphComponent = () => {
           }
         }
         onPointSelect={(setIndex: number, dataIndex: number) => {
-          const newData = [...data];
-          newData.push(CanadaAirportTrafficData[setIndex].data[dataIndex]);
-          setData(newData)
+          if (indexes[setIndex]) {
+            indexes[setIndex][dataIndex] = !indexes[setIndex][dataIndex];
+          } else {
+            indexes[setIndex] = [];
+            indexes[setIndex][dataIndex] = true;
+          }
+          setReload(++reload);
         }}
       />
       <Bargraph
         title={"Clicked"}
-        data={data}
+        data={dataset}
         scale={(value: number) => {
-          return ((value - dataset.min) / (dataset.max - dataset.min)) * 100;
+          return ((value - min) / (max - min)) * 100;
         }}
       />
     </>
