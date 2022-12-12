@@ -1,10 +1,8 @@
 import React from "react";
 import { DottedLine } from "./DottedLine";
+import { createOffsetScale } from "../../util/Scales";
 
 const offset = 10;
-const offsetScale = (value: number) => {
-  return (value / 100) * (100 - offset * 2) + offset;
-};
 
 interface LinegraphProps<T> {
   dataset: {
@@ -35,18 +33,15 @@ export const Linegraph = <T extends Record<string, any>>({
   return (
     <>
       <svg viewBox="0 0 100 100">
+        <text y={10}>This is an Example Title That's Pretty Long</text>
         {dataset.map((set, i) => {
           return (
             <DottedLine
               data={set.data}
               xValue={xValue}
-              xScale={(val: number) => {
-                return offsetScale(xScale(val));
-              }}
+              xScale={xScale}
               yValue={yValue}
-              yScale={(val: number) => {
-                return offsetScale(yScale(val));
-              }}
+              yScale={createOffsetScale(yScale, 100, offset)}
               colour={colourGenerator ? colourGenerator(i) : "black"}
               onSelect={(j: number) => {
                 if (onPointSelect) onPointSelect(i, j);

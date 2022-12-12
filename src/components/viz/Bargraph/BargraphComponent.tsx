@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Bargraph } from "./Bargraph";
 import { Linegraph } from "../Linegraph/Linegraph";
 import { CanadaAirportTrafficData } from "../data/CanadaAirportTraffic";
+import { createNormalScale, invertScale } from "../../util/Scales";
 
 const indexes: boolean[][] = [];
 const colours = ["gray", "blue", "green", "red", "orange", "pink"];
@@ -29,13 +30,9 @@ export const BargraphComponent = () => {
       <Linegraph<{ year: number; value: number }>
         dataset={CanadaAirportTrafficData}
         xValue="year"
-        xScale={(value: number) => {
-          return ((value - 2017) / 4) * 100;
-        }}
+        xScale={createNormalScale(2017, 2021, 2, 98)}
         yValue="value"
-        yScale={(value: number) => {
-          return 100 - (value / 19578357) * 100;
-        }}
+        yScale={invertScale(createNormalScale(0, 19578357, 2, 100), 100)}
         onPointSelect={(setIndex: number, dataIndex: number) => {
           if (indexes[setIndex]) {
             indexes[setIndex][dataIndex] = !indexes[setIndex][dataIndex];
