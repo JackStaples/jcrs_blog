@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Bargraph } from "./Bargraph";
 import { Linegraph } from "../Linegraph/Linegraph";
 import { CanadaAirportTrafficData } from "../data/CanadaAirportTraffic";
-import { createNormalScale, invertScale } from "../../util/Scales";
+import { createNormalScale } from "../../util/Scales";
 
 const indexes: boolean[][] = [];
 const colours = ["gray", "blue", "green", "red", "orange", "pink"];
@@ -24,15 +24,14 @@ export const BargraphComponent = () => {
     }
   }
 
-  console.log(dataset);
   return (
     <>
       <Linegraph<{ year: number; value: number }>
         dataset={CanadaAirportTrafficData}
         xValue="year"
-        xScale={createNormalScale(2017, 2021, 2, 98)}
+        xScale={createNormalScale(2017, 2021, 0, 100)}
         yValue="value"
-        yScale={invertScale(createNormalScale(0, 19578357, 2, 100), 100)}
+        yScale={createNormalScale(0, 19578357, 100, 0)}
         onPointSelect={(setIndex: number, dataIndex: number) => {
           if (indexes[setIndex]) {
             indexes[setIndex][dataIndex] = !indexes[setIndex][dataIndex];
@@ -48,6 +47,8 @@ export const BargraphComponent = () => {
         hoverColourGenerator={(i: number) => {
           return "orange";
         }}
+        title={"The Effects of the Covid Pandemic On Canadian Airport Traffic"}
+        yAxisMax={19578357}
       />
       <Bargraph
         title={"Clicked"}

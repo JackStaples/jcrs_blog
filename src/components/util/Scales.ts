@@ -26,9 +26,9 @@ export const invertScale = (scale: (i: number) => number, max: number) => {
 export const createOffsetScale = (
   scale: (i: number) => number,
   max: number,
-  offset: number
+  min: number
 ) => {
   return (value: number) => {
-    return (scale(value) / max) * (max - offset) + offset;
+    return (scale(value) / 100) * (max - min) + min;
   };
 };
